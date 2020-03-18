@@ -129,10 +129,7 @@ func BidaoAppN(database dbm.DB, trace io.Writer, latestLoad bool, log log.Logger
 		BaseApp:         baseApp,
 		codec:           codec,
 		checkPeriod:     checkPeriod,
-		oracleKey:       sdk.NewKVStoreKey("oracle"),
 		biddingKey:      sdk.NewKVStoreKey("bidding"),
-		posKey:          sdk.NewKVStoreKey("positions"),
-		sellKey:         sdk.NewKVStoreKey("sellcollateral"),
 		slashKey:        sdk.NewKVStoreKey(slashing.StoreKey),
 		governanceKey:   sdk.NewKVStoreKey(gov.StoreKey),
 		accKey:          sdk.NewKVStoreKey(auth.StoreKey),
@@ -157,8 +154,6 @@ func BidaoAppN(database dbm.DB, trace io.Writer, latestLoad bool, log log.Logger
 	slashingSubspace := bidaoApp.paramsKeeper.Subspace(slashing.DefaultParamspace)
 	govSubspace := bidaoApp.paramsKeeper.Subspace(gov.DefaultParamspace)
 	crisisSubspace := bidaoApp.paramsKeeper.Subspace(crisis.DefaultParamspace)
-	cdpSubspace := bidaoApp.paramsKeeper.Subspace("positions")
-	liquidatorSubspace := bidaoApp.paramsKeeper.Subspace("sellcollateral")
 
 	bidaoApp.accountKeeper = auth.NewAccountKeeper(bidaoApp.codec, bidaoApp.accKey, authSubspace, auth.ProtoBaseAccount)
 	bidaoApp.bankKeeper = bank.NewBaseKeeper(bidaoApp.accountKeeper, bankSubspace, bank.DefaultCodespace)
